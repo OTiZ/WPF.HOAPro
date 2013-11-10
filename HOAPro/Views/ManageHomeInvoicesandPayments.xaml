@@ -1,0 +1,43 @@
+﻿<Window x:Class="HOAPro.Views.ManageHomeInvoicesandPayments"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Manage Home Invoices and Payments" Height="300" Width="598">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="26" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240" />
+            <ColumnDefinition Width="336*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{Binding SelectedHome.PhysicalAddress, FallbackValue='800 E LINDEN LN'}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,5" />
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding HomeInvoices}" SelectedItem="{Binding SelectedHomeInvoice}" CanUserAddRows="False"
+                  CanUserResizeColumns="True" CanUserSortColumns="True" EnableRowVirtualization="True"
+                  CanUserReorderColumns="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="40">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnDeleteRow" Click="btnDeleteRow_Click" Tag="{Binding}">
+                                <Image Source="/HOAPro;component/Images/DeleteHS.png" Width="16" Height="16" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding DueYear}" Header="Year" IsReadOnly="True" Width="40"/>
+                <DataGridTextColumn Binding="{Binding DuesAmount, StringFormat=c}" Header="Dues Amount" IsReadOnly="True" Width="83"/>
+                <DataGridTextColumn Binding="{Binding PaymentAmount, StringFormat=c}" Header="Payment" IsReadOnly="True" Width="72"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Image Source="{Binding SelectedHomeInvoice.CheckImageUNC}" Grid.Row="1" Grid.Column="1" Stretch="Fill" MouseLeftButtonUp="Image_MouseLeftButtonUp"></Image>
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="2" Margin="0,2">
+            <Button x:Name="btnAddPayment" Content="Add Payment" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Click="btnAddPayment_Click" />
+            <Button x:Name="btnEditPayment" Content="Edit Payment" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Click="btnEditPayment_Click" Margin="2,0,0,0"/>
+        </StackPanel>
+        
+        <Button x:Name="btnOK" Content="_OK" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Click="btnOK_Click" Margin="0,2" />
+    </Grid>
+</Window>

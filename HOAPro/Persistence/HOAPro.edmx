@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="Model1StoreContainer">
+          <EntitySet Name="DueInvoices" EntityType="Model1.Store.DueInvoices" store:Type="Tables" />
+          <EntitySet Name="DuePayments" EntityType="Model1.Store.DuePayments" store:Type="Tables" />
+          <EntitySet Name="DueYears" EntityType="Model1.Store.DueYears" store:Type="Tables" />
+          <EntitySet Name="Homes" EntityType="Model1.Store.Homes" store:Type="Tables" />
+          <AssociationSet Name="DueInvoice_DuePayments" Association="Model1.Store.DueInvoice_DuePayments">
+            <End Role="DueInvoices" EntitySet="DueInvoices" />
+            <End Role="DuePayments" EntitySet="DuePayments" />
+          </AssociationSet>
+          <AssociationSet Name="DueInvoices_DueYears" Association="Model1.Store.DueInvoices_DueYears">
+            <End Role="DueYears" EntitySet="DueYears" />
+            <End Role="DueInvoices" EntitySet="DueInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="DueInvoices_Homes" Association="Model1.Store.DueInvoices_Homes">
+            <End Role="Homes" EntitySet="Homes" />
+            <End Role="DueInvoices" EntitySet="DueInvoices" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DueInvoices">
+          <Key>
+            <PropertyRef Name="DueInvoicesId" />
+          </Key>
+          <Property Name="HomeId" Type="int" Nullable="false" />
+          <Property Name="DueAmount" Type="money" Nullable="false" />
+          <Property Name="DueInvoicesId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DueYearsId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DuePayments">
+          <Key>
+            <PropertyRef Name="DuePaymentsId" />
+          </Key>
+          <Property Name="PaymentAmount" Type="money" />
+          <Property Name="CheckImageUNC" Type="nvarchar" />
+          <Property Name="DueInvoicesId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DuePaymentsId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CashPayment" Type="bit" />
+          <Property Name="ForfeitDueToForeclosure" Type="bit" />
+        </EntityType>
+        <EntityType Name="DueYears">
+          <Key>
+            <PropertyRef Name="DueYearsId" />
+          </Key>
+          <Property Name="DueYearsId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DueYear" Type="nvarchar" Nullable="false" MaxLength="4" />
+          <Property Name="DuesDueDate" Type="datetime" Nullable="false" />
+          <Property Name="DuesAmount" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Homes">
+          <Key>
+            <PropertyRef Name="HomeId" />
+          </Key>
+          <Property Name="HomeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="State" Type="nchar" Nullable="false" MaxLength="2" />
+          <Property Name="County" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Zip" Type="nchar" Nullable="false" MaxLength="5" />
+          <Property Name="Section" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Township" Type="int" Nullable="false" />
+          <Property Name="TownshipDir" Type="nchar" Nullable="false" MaxLength="1" />
+          <Property Name="Range" Type="int" Nullable="false" />
+          <Property Name="RangeDir" Type="nchar" Nullable="false" MaxLength="1" />
+          <Property Name="Block" Type="int" Nullable="false" />
+          <Property Name="Lot" Type="int" Nullable="false" />
+          <Property Name="PhysicalAddress" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="IsRental" Type="bit" />
+          <Property Name="IsBuilderOwned" Type="bit" />
+          <Property Name="MailingAddress" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="DueInvoice_DuePayments">
+          <End Role="DueInvoices" Type="Model1.Store.DueInvoices" Multiplicity="1" />
+          <End Role="DuePayments" Type="Model1.Store.DuePayments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DueInvoices">
+              <PropertyRef Name="DueInvoicesId" />
+            </Principal>
+            <Dependent Role="DuePayments">
+              <PropertyRef Name="DueInvoicesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DueInvoices_DueYears">
+          <End Role="DueYears" Type="Model1.Store.DueYears" Multiplicity="1" />
+          <End Role="DueInvoices" Type="Model1.Store.DueInvoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DueYears">
+              <PropertyRef Name="DueYearsId" />
+            </Principal>
+            <Dependent Role="DueInvoices">
+              <PropertyRef Name="DueYearsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DueInvoices_Homes">
+          <End Role="Homes" Type="Model1.Store.Homes" Multiplicity="1" />
+          <End Role="DueInvoices" Type="Model1.Store.DueInvoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Homes">
+              <PropertyRef Name="HomeId" />
+            </Principal>
+            <Dependent Role="DueInvoices">
+              <PropertyRef Name="HomeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HOAPro" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HOAProDBContainer" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="Homes" EntityType="HOAPro.Home" />
+          <EntitySet Name="DueInvoices" EntityType="HOAPro.DueInvoice" />
+          <EntitySet Name="DueYears" EntityType="HOAPro.DueYear" />
+          <AssociationSet Name="DueInvoices_DueYears" Association="HOAPro.DueInvoices_DueYears">
+            <End Role="DueYear" EntitySet="DueYears" />
+            <End Role="DueInvoice" EntitySet="DueInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="DueInvoices_Homes" Association="HOAPro.DueInvoices_Homes">
+            <End Role="Home" EntitySet="Homes" />
+            <End Role="DueInvoice" EntitySet="DueInvoices" />
+          </AssociationSet>
+          <EntitySet Name="DuePayments" EntityType="HOAPro.DuePayment" />
+          <AssociationSet Name="DueInvoice_DuePayments" Association="HOAPro.DueInvoice_DuePayments">
+            <End Role="DueInvoice" EntitySet="DueInvoices" />
+            <End Role="DuePayment" EntitySet="DuePayments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Home">
+          <Key>
+            <PropertyRef Name="HomeId" />
+          </Key>
+          <Property Type="Int32" Name="HomeId" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="State" Nullable="false" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="County" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Zip" Nullable="false" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Section" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Township" Nullable="false" />
+          <Property Type="String" Name="TownshipDir" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Type="Int32" Name="Range" Nullable="false" />
+          <Property Type="String" Name="RangeDir" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Type="Int32" Name="Block" Nullable="false" />
+          <Property Type="Int32" Name="Lot" Nullable="false" />
+          <Property Type="String" Name="PhysicalAddress" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsRental" />
+          <Property Type="Boolean" Name="IsBuilderOwned" />
+          <Property Type="String" Name="MailingAddress" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DueInvoices" Relationship="HOAPro.DueInvoices_Homes" FromRole="Home" ToRole="DueInvoice" />
+        </EntityType>
+        <EntityType Name="DueInvoice">
+          <Key>
+            <PropertyRef Name="DueInvoicesId" />
+          </Key>
+          <Property Type="Int32" Name="HomeId" Nullable="false" />
+          <Property Type="Decimal" Name="DueAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Guid" Name="DueInvoicesId" Nullable="false" />
+          <Property Type="Guid" Name="DueYearsId" Nullable="false" />
+          <NavigationProperty Name="DueYear" Relationship="HOAPro.DueInvoices_DueYears" FromRole="DueInvoice" ToRole="DueYear" />
+          <NavigationProperty Name="Home" Relationship="HOAPro.DueInvoices_Homes" FromRole="DueInvoice" ToRole="Home" />
+          <NavigationProperty Name="DuePayments" Relationship="HOAPro.DueInvoice_DuePayments" FromRole="DueInvoice" ToRole="DuePayment" />
+        </EntityType>
+        <EntityType Name="DueYear">
+          <Key>
+            <PropertyRef Name="DueYearsId" />
+          </Key>
+          <Property Type="Guid" Name="DueYearsId" Nullable="false" />
+          <Property Type="String" Name="DueYear1" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DuesDueDate" Nullable="false" Precision="3" />
+          <Property Type="Decimal" Name="DuesAmount" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="DueInvoices" Relationship="HOAPro.DueInvoices_DueYears" FromRole="DueYear" ToRole="DueInvoice" />
+        </EntityType>
+        <Association Name="DueInvoices_DueYears">
+          <End Type="HOAPro.DueYear" Role="DueYear" Multiplicity="1" />
+          <End Type="HOAPro.DueInvoice" Role="DueInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DueYear">
+              <PropertyRef Name="DueYearsId" />
+            </Principal>
+            <Dependent Role="DueInvoice">
+              <PropertyRef Name="DueYearsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DueInvoices_Homes">
+          <End Type="HOAPro.Home" Role="Home" Multiplicity="1" />
+          <End Type="HOAPro.DueInvoice" Role="DueInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Home">
+              <PropertyRef Name="HomeId" />
+            </Principal>
+            <Dependent Role="DueInvoice">
+              <PropertyRef Name="HomeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DuePayment">
+          <Key>
+            <PropertyRef Name="DuePaymentsId" />
+          </Key>
+          <Property Type="Decimal" Name="PaymentAmount" Precision="19" Scale="4" />
+          <Property Type="String" Name="CheckImageUNC" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="DueInvoicesId" Nullable="false" />
+          <Property Type="Guid" Name="DuePaymentsId" Nullable="false" />
+          <NavigationProperty Name="DueInvoice" Relationship="HOAPro.DueInvoice_DuePayments" FromRole="DuePayment" ToRole="DueInvoice" />
+          <Property Type="Boolean" Name="CashPayment" />
+          <Property Type="Boolean" Name="ForfeitDueToForeclosure" />
+        </EntityType>
+        <Association Name="DueInvoice_DuePayments">
+          <End Type="HOAPro.DueInvoice" Role="DueInvoice" Multiplicity="1" />
+          <End Type="HOAPro.DuePayment" Role="DuePayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DueInvoice">
+              <PropertyRef Name="DueInvoicesId" />
+            </Principal>
+            <Dependent Role="DuePayment">
+              <PropertyRef Name="DueInvoicesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <Alias Key="Model" Value="Model1" />
+        <Alias Key="Target" Value="Model1.Store" />
+        <EntityContainerMapping CdmEntityContainer="HOAProDBContainer" StorageEntityContainer="Model1StoreContainer">
+          <EntitySetMapping Name="Homes">
+            <EntityTypeMapping TypeName="HOAPro.Home">
+              <MappingFragment StoreEntitySet="Homes">
+                <ScalarProperty Name="MailingAddress" ColumnName="MailingAddress" />
+                <ScalarProperty Name="IsBuilderOwned" ColumnName="IsBuilderOwned" />
+                <ScalarProperty Name="IsRental" ColumnName="IsRental" />
+                <ScalarProperty Name="PhysicalAddress" ColumnName="PhysicalAddress" />
+                <ScalarProperty Name="Lot" ColumnName="Lot" />
+                <ScalarProperty Name="Block" ColumnName="Block" />
+                <ScalarProperty Name="RangeDir" ColumnName="RangeDir" />
+                <ScalarProperty Name="Range" ColumnName="Range" />
+                <ScalarProperty Name="TownshipDir" ColumnName="TownshipDir" />
+                <ScalarProperty Name="Township" ColumnName="Township" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="HomeId" ColumnName="HomeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DueInvoices">
+            <EntityTypeMapping TypeName="HOAPro.DueInvoice">
+              <MappingFragment StoreEntitySet="DueInvoices">
+                <ScalarProperty Name="DueYearsId" ColumnName="DueYearsId" />
+                <ScalarProperty Name="DueInvoicesId" ColumnName="DueInvoicesId" />
+                <ScalarProperty Name="DueAmount" ColumnName="DueAmount" />
+                <ScalarProperty Name="HomeId" ColumnName="HomeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DueYears">
+            <EntityTypeMapping TypeName="HOAPro.DueYear">
+              <MappingFragment StoreEntitySet="DueYears">
+                <ScalarProperty Name="DuesAmount" ColumnName="DuesAmount" />
+                <ScalarProperty Name="DuesDueDate" ColumnName="DuesDueDate" />
+                <ScalarProperty Name="DueYear1" ColumnName="DueYear" />
+                <ScalarProperty Name="DueYearsId" ColumnName="DueYearsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DuePayments">
+            <EntityTypeMapping TypeName="HOAPro.DuePayment">
+              <MappingFragment StoreEntitySet="DuePayments">
+                <ScalarProperty Name="ForfeitDueToForeclosure" ColumnName="ForfeitDueToForeclosure" />
+                <ScalarProperty Name="CashPayment" ColumnName="CashPayment" />
+                <ScalarProperty Name="DuePaymentsId" ColumnName="DuePaymentsId" />
+                <ScalarProperty Name="DueInvoicesId" ColumnName="DueInvoicesId" />
+                <ScalarProperty Name="CheckImageUNC" ColumnName="CheckImageUNC" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer>
+    <edmx:Connection>
+      <DesignerInfoPropertySet xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="Model1" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx" ZoomLevel="75">
+        <EntityTypeShape EntityType="HOAPro.Home" Width="1.5" PointX="1.25" PointY="3.5" Height="4.2879036458333317" />
+        <EntityTypeShape EntityType="HOAPro.DueInvoice" Width="1.5" PointX="4.625" PointY="1.375" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="HOAPro.DueYear" Width="1.5" PointX="7" PointY="4.5" Height="1.9802864583333317" />
+        <AssociationConnector Association="HOAPro.DueInvoices_DueYears">
+          <ConnectorPoint PointX="8.46875" PointY="4.5" />
+          <ConnectorPoint PointX="8.46875" PointY="1.46875" />
+          <ConnectorPoint PointX="6.125" PointY="1.46875" />
+        </AssociationConnector>
+        <AssociationConnector Association="HOAPro.DueInvoices_Homes">
+          <ConnectorPoint PointX="2.75" PointY="5.763896984375" />
+          <ConnectorPoint PointX="5.375" PointY="5.763896984375" />
+          <ConnectorPoint PointX="5.375" PointY="3.739889322916667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="HOAPro.DuePayment" Width="1.5" PointX="6.875" PointY="1.625" Height="1.9802864583333335" />
+        <AssociationConnector Association="HOAPro.DueInvoice_DuePayments">
+          <ConnectorPoint PointX="6.125" PointY="2.6151432291666667" />
+          <ConnectorPoint PointX="6.875" PointY="2.6151432291666667" />
+        </AssociationConnector>
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

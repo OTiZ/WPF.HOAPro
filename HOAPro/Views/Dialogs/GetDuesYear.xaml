@@ -1,0 +1,16 @@
+﻿<Window x:Class="HOAPro.Views.Dialogs.GetDuesYear"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Select Year" Height="120" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26" />
+            <RowDefinition Height="26" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="Please select the year to run invoices for:" Grid.Row="0" />
+        <ComboBox x:Name="cboDuesYears" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" ItemsSource="{Binding DuesYears}" SelectedItem="{Binding SelectedDuesYear}" Width="100"/>
+        <Button x:Name="btnCancel" Grid.Row="2" HorizontalAlignment="Right" Content="Cancel" VerticalAlignment="Center" Width="75" Click="btnCancel_Click" />
+        <Button x:Name="btnOk" Grid.Row="2" HorizontalAlignment="Right" Content="OK" VerticalAlignment="Center" Width="75" Margin="0,0,80,0" Click="btnOk_Click" />
+    </Grid>
+</Window>

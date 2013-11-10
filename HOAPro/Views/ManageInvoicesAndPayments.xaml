@@ -1,0 +1,24 @@
+﻿<Window x:Class="HOAPro.Views.ManageInvoicesAndPayments"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Manage Invoices And Payments" Height="300" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="26" />
+        </Grid.RowDefinitions>
+        <Button x:Name="btnRunInvoices" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Run Invoices" Click="btnRunInvoices_Click" />
+        <Button x:Name="btnManagePayments" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Content="Manage / Apply Payments" Margin="0,0,80,0" Click="btnManagePayments_Click" />
+        <Button x:Name="btnExportPastDue" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Export Past Due Homes To Excel" Click="btnExportPastDue_Click" />
+        <DataGrid x:Name ="grdHomes" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AutoGenerateColumns="False" 
+                  ItemsSource="{Binding InvoiceHomePayments, Mode=TwoWay}" SelectedItem="{Binding SelectedInvoiceHomePayment}"
+                  CanUserResizeColumns="True" CanUserSortColumns="True" EnableRowVirtualization="True"
+                  CanUserReorderColumns="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Address}" Header="Home" IsReadOnly="True" Width="200" />
+                <DataGridTextColumn Binding="{Binding TotalInvoiced, StringFormat=c}" Header="Total Invoiced" IsReadOnly="True" Width="85" />
+                <DataGridTextColumn Binding="{Binding TotalPayments, StringFormat=c}" Header="Total Payments" IsReadOnly="True" Width="90" />
+            </DataGrid.Columns>            
+        </DataGrid>
+    </Grid>
+</Window>
